@@ -9,7 +9,6 @@
 - [Data Cleaning](#data-cleaning)
 - [Exploratory data analysis](#exploratory-data-analysis)
 - [Conclusion](#conclusion)
-- [References](#references)
 
 ### Project Overview
 ---

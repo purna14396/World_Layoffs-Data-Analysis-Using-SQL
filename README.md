@@ -34,14 +34,7 @@ SQL Server - Data Cleaning and Data Analysis
 1. Removing Duplicates
 
     To identify duplicates we will add one column named row_num which will specify the number of duplicate rows.
-    ```sql
-    select *,
-    row_number() over(
-    partition by company, location,industry,total_laid_off,percentage_laid_off,date,stage,country,funds_raised_millions)
-     as row_num
-    from layoffs_staging
-    ```
-    The rows having row_num > 1 are deleted.
+    The rows having row_num > 1 will be deleted.
 
 2. Standardizing the rows
    
@@ -52,19 +45,12 @@ SQL Server - Data Cleaning and Data Analysis
 3. Removing null and blank values
 
   -  Cases were found where companies had multiple entries, some of which were missing industry information while others were correctly categorized. To rectify these inconsistencies, I used self join to automatically fill all the null values in industry section.
-    
-```sql
-    update layoffs2 t1 join layoffs2 t2
-    on t1.company=t2.company
-    set t1.industry=t2.industry
-    where t1.industry is null
-    and t2.industry is not null;
-```
 
 4. Removing unwanted data and columns
    
 - Rows where total_laid_off and perentage laid-off are null were deleted.
 - row_num column was altered.
+
 
 ### Exploratory data analysis
 ---

@@ -1,156 +1,80 @@
-# World_Layoffs-Data-Analysis-Using-SQL
+# 📊 Layoffs Data Analysis
 
+## 📌 Overview
+This repository contains an exploratory data analysis (EDA) of company layoffs using SQL. The analysis provides insights into layoffs trends by company, industry, country, year, and month.
 
-## Table of Contents
+## 📂 Table of Contents
+- [Dataset Overview](#dataset-overview)
+- [Exploratory Data Analysis](#exploratory-data-analysis)
+  - [Maximum Layoffs in a Single Day](#maximum-layoffs-in-a-single-day)
+  - [Companies with 100% Layoffs](#companies-with-100-layoffs)
+  - [Layoffs by Company](#layoffs-by-company)
+  - [Layoffs by Industry](#layoffs-by-industry)
+  - [Layoffs by Country](#layoffs-by-country)
+  - [Yearly Layoffs by Company](#yearly-layoffs-by-company)
+  - [Top Companies by Layoffs (Ranked)](#top-companies-by-layoffs-ranked)
 
-- [Project Overview](#project-overview)
-- [Data Source](#data-source)
-- [Tools](#tools)
-- [Data Cleaning](#data-cleaning)
-- [Exploratory data analysis](#exploratory-data-analysis)
-- [Conclusion](#conclusion)
+## 📊 Dataset Overview
+The dataset used for this analysis is `layoffs_staging2`, which contains information on layoffs, including company name, total layoffs, percentage of workforce laid off, industry, country, and the date of layoffs.
 
-### Project Overview
 ---
 
-The primary goal of this project is to analyze global layoff data to identify trends, patterns, and insights. This analysis will help understand the factors influencing layoffs, the industries most affected and geographical trends.
+## 🔍 Exploratory Data Analysis
+
+### 📈 Maximum Layoffs in a Single Day
+Finds the highest number of layoffs recorded in a single day, along with the maximum percentage of a workforce laid off.
+
+🖼️ ![Max Layoffs](image_link_here)
+
+### 🚨 Companies with 100% Layoffs
+Identifies companies that laid off their entire workforce.
 
 
-### Data Source
+🖼️ ![Full Layoffs Companies](image_link_here)
+
+
+### 🏢 Layoffs by Company
+Shows the total number of layoffs per company.
+
+
+🖼️ ![Company Layoffs](image_link_here)
+
+### 🏭 Layoffs by Industry
+Aggregates layoffs by industry sector.
+
+
+🖼️ ![Industry Layoffs](image_link_here)
+
+### 🌍 Layoffs by Country
+Summarizes layoffs by country.
+
+
+🖼️ ![Country Layoffs](image_link_here)
+
+
+### 🏢 Yearly Layoffs by Company
+Tracks layoffs by company for each year.
+
+
+🖼️ ![Yearly Layoffs by Company](image_link_here)
+
+### 🏆 Top Companies by Layoffs (Ranked)
+Ranks companies based on layoffs per year.
+
+
+🖼️ ![Top Companies by Layoffs](image_link_here)
+
 ---
 
-Layoffs Data: The primary dataset used for this analysis is the "layoffs.csv" file, containing detailed information about the number of layoffs and the percentage layoffs made by each company.
+## 🛠️ Technologies Used
+- SQL (for querying the dataset)
+- SQL (Exploratory data Analysis)
 
-### Tools
+## 📌 Contributing
+Feel free to submit a pull request or open an issue if you have any suggestions or improvements!
+
 ---
 
-SQL Server - Data Cleaning and Data Analysis
-
-### Data Cleaning
----
+🌟 **If you find this analysis helpful, give this repository a star!** 🌟
 
 
-1. Removing Duplicates
-
-    To identify duplicates we will add one column named row_num which will specify the number of duplicate rows.
-    The rows having row_num > 1 will be deleted.
-
-2. Standardizing the rows
-   
-  - Industry column cantained entries such as 'Crypto', 'Cryptocurrency', and 'Crypto Currency', each referring to the same sector which were consolidated into a 
-    single term, 'Crypto'.Similarly for country column 'United States' and 'United States.' were consolidated into 'United State'.
-  - The data type of date was changed into 'date' from 'text'.
-
-3. Removing null and blank values
-
-  -  Cases were found where companies had multiple entries, some of which were missing industry information while others were correctly categorized. To rectify these inconsistencies, I used self join to automatically fill all the null values in industry section.
-
-4. Removing unwanted data and columns
-   
-- Rows where total_laid_off and perentage laid-off are null were deleted.
-- row_num column was altered.
-
-
-### Exploratory data analysis
----
-1. 
-```sql
-SELECT MAX(date),  MIN(date)
-FROM world_layoffs.layoffs2;
-```
-The dataset records layoff data spanning from 2020-03-11 to 2023-03-06. This period captures significant global economic events, including the impacts of the COVID-19 pandemic, which began in early 2020, and the subsequent economic recovery phases. Analyzing data from this timeframe provides valuable insights into how different industries and regions were affected by these challenges.
-
-2.
-```sql
-SELECT *
-FROM world_layoffs.layoffs2
-WHERE  percentage_laid_off = 1;
-```
-The SQL query results indicate that the majority of companies that laid off their entire workforce (100% layoffs) are startups because the stage mentioned are early and they don't have much funds for the company.
-
-3. Companies with the highest layoff in a single day are Google(12000), Meta(11000), Amazon(10000), Microsoft(10000), Ericsson(8500).
-<p>
-  <img src="Images/Screenshot 2024-05-28 205752.png">
-</p>
-4. Companies with most total layoffs: Here Amazon had the highest total layoff.
-<p>
-  <img src="Images/Screenshot 2024-05-28 205650.png">
-</p>
-5. United states had the highest number of layoffs in these 3 years.
-
-```sql
-  SELECT country, SUM(total_laid_off)
-  FROM world_layoffs.layoffs2
-  GROUP BY country
-  ORDER BY 2 DESC;
-```
-
-<p>
-  <img width="560" height="340" src="Images/pie_chart_country.png">
-</p>
-
-Checking the locations in US having the most number of layoffs:
-<p>
-  <img width="560" height="340" src="Images/usocation.png">
-</p>
-
-
-6. Total Layoffs with respect to Year
-  
-```sql
-  SELECT YEAR(date) as year_, SUM(total_laid_off)
-  FROM world_layoffs.layoffs2
-  GROUP BY YEAR(date)
-  having year_ is not null
-  ORDER BY 1 ASC;
- ```
-<p>
-  <img width="560" height="340" src="Images/year.png">
-</p>
-
-The year 2022 stands out as a period of considerable layoffs across various industries and regions.
-
-7.Total layoffs with respect to stage of the business:
-
-<p>
-  <img width="560" height="340" src="Images/stage.png">
-</p>
-
-The business with post-ipo stages have done maximum number of layoffs because these companies typically have substantial financial resources (funds) from their public offerings. 
-
-8. Total layoffs with respect to industry:
-
-<p>
-  <img width="560" height="340" src="Images/industry.png">
-</p>
-
-The consumer sector has witnessed the most significant layoffs.
-
-9. Timeline of the layoffs:
-
-<p>
-  <img width="560" height="340" src="Images/timeline_laidoff_month.png">
-</p>
-
-### Conclusion
-
-The comprehensive analysis of the world layoff dataset from 2020 to 2023 provides valuable insights into global layoff trends, highlighting the significant factors and sectors affected. Key conclusions from the analysis include:
-
-- Industries which affected the most due to pandemic were Consumer sector and Tech sector. Consumer sector was affected because the shift to online shopping,     
-  supply chain issues, and rising costs.The tech sector also saw substantial layoffs, especially among post-IPO companies. Despite having considerable funds, these companies faced pressure to achieve profitability and maintain investor confidence, leading to operational restructuring and workforce cuts.
-
-- Cities having most of the startups and businesss in United States is affected the most.
-- The factors causing the layoffs were mostly economic,market and operational. By understanding these dynamics, businesses and policymakers can make         decisions to support affected industries and protect jobs to face future challenges.
-
-
-
-
-
-
-
-
-
-
-
-
-    
